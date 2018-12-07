@@ -1,3 +1,15 @@
-<p>
-  signin works!
-</p>
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()" >
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" formControlName="password">
+  </div>
+ 
+  <button type="submit" class="btn btn-primary" [disabled]="signInForm.invalid">Submit</button>
+</form>
+<p class="text-danger">{{ errorMessage }}</p>
+{{signInForm.get('email').value}}
+{{ signInForm.get('password').value }}

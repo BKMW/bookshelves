@@ -5,8 +5,9 @@ import * as firebase from 'firebase';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor() { }
+  constructor() { 
+    console.log("new AuthService")
+  }
   createNewUser(email:string,password:string){
     return new Promise(
       (resolve,reject)=>{

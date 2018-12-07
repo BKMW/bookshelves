@@ -15,16 +15,16 @@
       <li class="nav-item" routerLinkActive='active'>
         <a class="nav-link" routerLink='books/new'> Create new book </a>
       </li>
-      <li class="nav-item" routerLinkActive='active'>
-        <a class="nav-link disabled" href="#"> Disabled </a>
-      </li>
     </ul>
     <ul class="navbar-nav  my-2 my-lg-0">
-      <li class="nav-item" routerLinkActive='active'>
+      <li class="nav-item" routerLinkActive='active' *ngIf="!isAuth">
         <a class="nav-link" routerLink='auth/signup'> Sign Up </a>
       </li>
-      <li class="nav-item" routerLinkActive='active'>
+      <li class="nav-item" routerLinkActive='active' *ngIf="!isAuth">
         <a class="nav-link" routerLink='auth/signin'> Sign In </a>
+      </li>
+      <li class="nav-item" routerLinkActive='active' *ngIf="isAuth">
+        <a class="nav-link" (click)="onSignOut()" style="cursor: pointer;"> Log Out </a>
       </li>
     </ul>
   </div>
