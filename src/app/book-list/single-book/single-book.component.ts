@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Book } from 'src/app/models/book';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BooksService } from 'src/app/services/books.service';
 
 @Component({
   selector: 'app-single-book',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./single-book.component.scss']
 })
 export class SingleBookComponent implements OnInit {
-
-  constructor() { }
+book:Book;
+  constructor(private route:ActivatedRoute,private router:Router,private booksServive:BooksService) { }
 
   ngOnInit() {
+    this.book=new Book('','');
+    const id =this.route.snapshot.params['id'];
+    console.log(id);
+    this.booksServive.getSingleBook(+id).then(
+      (book:Book)=>{
+        this.book=book;
+      }
+    );
   }
+onBack(){
+  this.router.navigate(['/books']);
+}
 
 }
