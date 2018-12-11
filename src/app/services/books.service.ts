@@ -45,6 +45,14 @@ booksSubject= new Subject<Book[]>();
     this.emitBooks();
   }
   removeBook(book:Book){
+    if(book.photo){
+      const storageRef=firebase.storage().refFromURL(book.photo);
+      storageRef.delete().then(
+        ()=>console.log('photo deleted !')
+      ).catch(
+        (error)=>console.log("file not found" + error)
+      );
+    }
     const bookIndexToRemove=this.books.findIndex(
       (bookEl)=>{
         if(bookEl==book){
@@ -56,5 +64,27 @@ booksSubject= new Subject<Book[]>();
     this.saveBooks();
     this.emitBooks();
 
+  }
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const almostUniqueFileName = Date.now().toString();
+        const upload = firebase.storage().ref()
+          .child('images/' + almostUniqueFileName + file.name).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            console.log('Chargement…');
+          },
+          (error) => {
+            console.log('Erreur de chargement ! : ' + error);
+            reject();
+          },
+          () => {
+            resolve(upload.snapshot.ref.getDownloadURL());
+            console.log("upload.snapshot.downloadURL",upload.snapshot.ref.getDownloadURL());
+          }
+        );
+      }
+    );
   }
 }
