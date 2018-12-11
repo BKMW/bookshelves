@@ -28,7 +28,7 @@ initForm(){
   });
 }
 onSave(){
-  const title=this.bookForm.get('title').value;
+  const title=this.bookForm.value['title'];  //get('title').value;
   const author=this.bookForm.get('author').value;
   const newBook=new Book(title,author);
   if(this.fileUrl && this.fileUrl!=''){
